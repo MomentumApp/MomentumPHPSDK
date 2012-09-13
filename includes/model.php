@@ -108,14 +108,15 @@ class ApiModel {
 		if($this->__modified) {
 			if(\Momentum\Api::$__webhookQueue)
 				\Momentum\Api::$__webhookQueueData[$this->__model."/$this->id"] = $this->__modified;
-			else
+			else {
 				$response = Curl::PostRequest($this->__model."/$this->id", $this->__modified);
+				$response = json_decode($response->body);
+
+				if($response->status->code == 500)
+					throw new Exception($response->status->message);
+			}
 		}
 
-		$response = json_decode($response->body);
-
-		if($response->status->code == 500)
-			throw new Exception($response->status->message);
 
 		return true;
 
