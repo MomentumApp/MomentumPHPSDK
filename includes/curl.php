@@ -140,7 +140,7 @@ class Curl {
 		curl_setopt($request, CURLOPT_HTTPHEADER, self::$headers);
 		curl_setopt($request, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
 		curl_setopt($request, CURLOPT_USERPWD, self::$user.':'.self::$password);
-		curl_setopt($request, CURLOPT_HEADER, 1);
+		//curl_setopt($request, CURLOPT_HEADER, 1);
 		curl_setopt($request, CURLOPT_USERAGENT, self::$user_agent);
 		curl_setopt($request, CURLOPT_ENCODING , self::$compression);
 		curl_setopt($request, CURLOPT_TIMEOUT, 30);
@@ -174,10 +174,11 @@ class CurlResponse {
 
 	function __construct($text, $info) {
 
+
 		/**
 		 * fix issue with continue header
 		 */
-		if(strpos($text, 'HTTP/1.1 100 Continue'));
+		/*if(strpos($text, 'HTTP/1.1 100 Continue'));
 			$text = substr($text, strpos($text, "\r\n\r\n")+4);
 
 		$this->info = $info;
@@ -189,9 +190,9 @@ class CurlResponse {
 		$split = $split2 > 0 && $split2 < $split ? $split2 : $split;
 		$split = $split3 > 0 && $split3 < $split ? $split3 : $split;
 
-		$splen = $split == $split1 ? 4 : 2;
+		$splen = $split == $split1 ? 4 : 2;*/
 
-		$this->body = trim(substr($text, $split + $splen));
+		$this->body = $text;
 		$this->headers = substr($text, 0, $split);
 	}
 
