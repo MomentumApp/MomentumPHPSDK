@@ -36,6 +36,17 @@ class Donation extends WebhookResponse {
 		}
 	}
 
+
+	public function getProject() {
+		foreach($this->__payload['targets'] as $key => $data) 
+			if($key == 'project') {
+				return $this->__api->getProject($data);
+			}
+		}
+		return false;
+	}
+
+
 	/**
 	 * Tag the donation.
 	 */
